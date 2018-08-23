@@ -15,7 +15,7 @@ class AlterPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->unsignedInteger('category_id')->nullable(); // 
-            $table->foreign('category_id')->references('id')->on('category');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('SET NULL');
         });
     }
 

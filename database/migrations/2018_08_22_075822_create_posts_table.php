@@ -15,13 +15,14 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('post_type', ['stage','formation', 'undefined']);
+            $table->enum('post_type', ['stage','formation', 'undefined'])->default('undefined');
             $table->string('title', 100); // varchar 100
             $table->text('description')->nullable(); // TEST NULL
-            $table->dateTime('date_debut');
-            $table->dateTime('date_fin');
-            $table->decimal('prix', 8, 2);
-            $table->smallInteger('max_eleves');
+            $table->dateTime('date_debut')->nullable();
+            $table->dateTime('date_fin')->nullable();
+            $table->unsignedDecimal('prix', 6, 2)->nullable();
+            $table->smallInteger('max_eleves')->nullable();
+            $table->enum('publication', ['publier','nonpublier'])->default('nonpublier');
             $table->timestamps();
         });
     }
