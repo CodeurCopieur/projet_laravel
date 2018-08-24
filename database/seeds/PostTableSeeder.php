@@ -26,7 +26,7 @@ class PostTableSeeder extends Seeder
         ]);
 
         //  creéation de 30 livres à partir de la factory
-        factory(App\Post::class, 10)->create()->each(function($post){
+        factory(App\Post::class, 40)->create()->each(function($post){
 
             // $book->title = 'Hello nouveau titre';
             // $book->save();
@@ -36,16 +36,16 @@ class PostTableSeeder extends Seeder
             // pour chaque $book on lui asocie un genre en particuler
             $post->category()->associate($category);
             $post->save();
-/*
+
             $link = str_random(12) . '.jpg';
             $file = file_get_contents('http://lorempicsum.com/futurama/250/250/' . rand(1, 9));
             Storage::disk('local')->put($link, $file);
 
-            $book->picture()->create([
+            $post->picture()->create([
                     'title' => 'Default',
                     'link' => $link
             ]);
-            
+            /*
             $authors = App\Author::pluck('id')->shuffle()->slice(0, rand(1, 3))->all();
 
             $book->authors()->attach($authors);*/
