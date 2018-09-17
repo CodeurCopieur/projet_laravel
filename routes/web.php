@@ -27,10 +27,17 @@ Route::get('/', function () {
 //page d'accueil
 Route::get('/', 'FrontController@index')->name('home');
 // Route pour afficher un livre, route sécurisé
-Route::get('post/{id}', 'FrontController@show')->where(['id'=>'[0-9]+']);
+Route::get('post/{id}', 'FrontController@show')->name('post')->where(['id'=>'[0-9]+']);
 
 
 //Route pour afficher les auteurs
-Route::get('/stage', 'FrontController@showPostStage')->where(['id'=>'[0-9]+'])->name('stage');
+Route::get('stage', 'FrontController@showPostStage')->name('stage');
 //Route pour afficher les genres 
-Route::get('/formation', 'FrontController@showPostFormation')->where(['id'=>'[0-9]+'])->name('formation');
+Route::get('formation', 'FrontController@showPostFormation')->name('formation');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// routes sécurisées
+
+Route::resource('admin/post', 'PostController')->middleware('auth');

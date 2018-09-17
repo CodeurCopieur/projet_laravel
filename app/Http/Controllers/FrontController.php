@@ -7,13 +7,13 @@ use App\Post;
 
 class FrontController extends Controller
 {
-    protected $paginate = 40;
+    private $paginate = 5;
 
     public function index(){
-        $types = Post::all()->pluck('post_type')->unique();
-        $posts = Post::paginate($this->paginate); // pagination 
+        //$posts = Post::orderByDate()->with('picture', 'category')->limit(2)->get();
+        $posts = Post::orderBy('created_at', 'ASC')->take(2)->get();
 
-        return view('front.index', ['posts' => $posts, 'types'=> $types]);
+        return view('front.index', ['posts' => $posts]);
 
     }
     
@@ -31,9 +31,29 @@ class FrontController extends Controller
     public function show(int $id){
 
         // vous ne récupérez qu'un seul livre 
-        $book = Post::find($id);
+        $post = Post::find($id);
 
         // que vous passez à la vue
         return view('front.show', ['post' => $post]);
     }
+
+    public function showPostStage(){
+
+        $posts= Post::where('post_type','=','stage')->paginate(5); // récupérez les informations liés à l'auteur
+        // on récupère tous les livres d'un auteur
+
+        // On passe les livres et le nom de l'auteur
+        return view('front.stage', ['posts' => $posts, 'post_type' => 'stage']);
+
+    }
+
+    public function showPostFormation(){
+
+        // on récupère le modèle genre.id 
+        $posts= Post::where('post_type','=','formation')->paginate(5); // récupérez les informations liés à l'auteur
+
+        return view('front.formation', ['posts' => $posts, 'post_type' => 'formation']);
+
+    }
+
 }

@@ -10,12 +10,12 @@
    
         @forelse($posts as $post)
         <div class="card mb-4" style="width:20rem;">
-            @if(count($post->picture) > 0)
+            @if(is_null($post->picture) == false)
                     <img class="card-img-top" src="{{asset('images/'.$post->picture->link)}}" alt="{{$post->picture->title}}">
 
             @endif
             <div class="card-body">
-                <h5 class="card-title"><a href="{{route('stage', $post->id)}}">{{$post->title}}</a></h5>
+                <h5 class="card-title"><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h5>
                 <p class="card-text">{{$post->description}}</p>
                 <a href="#" class="btn btn-primary">{{$post->post_type}}</a>
             </div>

@@ -6,15 +6,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            @if(isset($posts))
-            @forelse($types as $type)
-                <li class="nav-item">
-                <a  class="nav-link" href="{{route($type)}}">{{$type}}</a>
-                </li>
-            @empty 
-                <li>Aucun post type pour l'instant</li>
-            @endforelse
-            @endif
+        <li class="nav-item active"><a class="nav-link" href="{{route('stage')}}">Stage</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{route('formation')}}">Formation</a></li>
+        
+        <li class="nav-item active">
+   
+        {{--  <a class="nav-link" href="{{route('post.index')}}">{{ Auth::user()->name }}</a> --}}
+    </li>
+    <li class="nav-item active">
+    {{-- renvoie true si vous êtes connecté --}}
+                @if(Auth::check())
+        <a class="nav-link"  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Déconnexion</a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+        </form>
+    </li>
+@endif
         </ul>
     </div>
 </nav>
