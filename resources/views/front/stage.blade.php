@@ -1,23 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
-<article class="row">
-    <div class="col-md-12">
-    {{$posts->links()}}
+<div class="container">
+<h1>Les stages</h1>
+
+{{$posts->links()}}
+<div class="card-deck" style="bottom: 1rem;">
+   
     @forelse($posts as $post)
-    <h1><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h1>
-        <div class="col-xs-6 col-md-12">
-            <a href="#" class="thumbnail">
-            <img src="{{asset('images/'.$post->picture->link)}}" alt="{{$post->picture->title}}">
-            </a>
-        </div>
-    <h2>Description :</h2>
-    {{$post->description}}    
+    <div class="card-group" style="width: 20rem; bottom: 1em;">
+  <div class="card">
+  <img src="{{asset('images/'.$post->picture->link)}}" alt="{{$post->picture->title}}">
+    <div class="card-body">
+      <h5 class="card-title"><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h5>
+      <p class="card-text">{{$post->description}}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">{{$post->date_debut}}</small>
+    </div>
+  </div>
+</div>
     @empty 
     <h1>Désolé aucun article</h1>
     @endif 
     </div>
-</article>
 
-</ul>
+    </div>
 @endsection 

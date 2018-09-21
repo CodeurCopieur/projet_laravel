@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h1>Les derniers posts publier</h1>
+<h1>Resultat de votre recherche</h1>
 
 
     <div class="card-deck" style="bottom: 1rem;">

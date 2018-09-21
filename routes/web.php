@@ -41,3 +41,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // routes sécurisées
 
 Route::resource('admin/post', 'PostController')->middleware('auth');
+
+
+Route::get('/search', 'FrontController@searchPost')->name('search');
+
+Route::get('/contact', 'FrontController@formContact')->name('contact');

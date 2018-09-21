@@ -7,7 +7,7 @@ use App\Post;
 
 class FrontController extends Controller
 {
-    private $paginate = 5;
+    private $paginate = 6;
 
     public function index(){
         //$posts = Post::orderByDate()->with('picture', 'category')->limit(2)->get();
@@ -39,7 +39,7 @@ class FrontController extends Controller
 
     public function showPostStage(){
 
-        $posts= Post::where('post_type','=','stage')->paginate(5); // récupérez les informations liés à l'auteur
+        $posts= Post::where('post_type','=','stage')->paginate(6); // récupérez les informations liés à l'auteur
         // on récupère tous les livres d'un auteur
 
         // On passe les livres et le nom de l'auteur
@@ -50,10 +50,25 @@ class FrontController extends Controller
     public function showPostFormation(){
 
         // on récupère le modèle genre.id 
-        $posts= Post::where('post_type','=','formation')->paginate(5); // récupérez les informations liés à l'auteur
+        $posts= Post::where('post_type','=','formation')->paginate(6); // récupérez les informations liés à l'auteur
 
         return view('front.formation', ['posts' => $posts, 'post_type' => 'formation']);
 
+    }
+
+    public function searchPost(Request $request){
+        $query = $request->search;
+
+        $posts = Post::where('title', 'LIKE', '%' . $query . '%')
+        ->orWhere('description', 'LIKE', '%' . $query . '%')
+        ->orWhere('post_type', 'LIKE', '%' . $query . '%')
+        ->paginate(10);
+
+    return view('front.search', ['posts' => $posts]); 
+    }
+
+    public function formContact(){
+        return view('front.create');
     }
 
 }
