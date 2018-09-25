@@ -10,13 +10,16 @@
     @forelse($posts as $post)
     <div class="card-group" style="width: 20rem; bottom: 1em;">
   <div class="card">
+  @if(count($post->picture) > 0)
   <img src="{{asset('images/'.$post->picture->link)}}" alt="{{$post->picture->title}}">
+  @endif
     <div class="card-body">
       <h5 class="card-title"><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h5>
       <p class="card-text">{{$post->description}}</p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">{{$post->date_debut}}</small>
+    <small class="text-muted">Date de début : {{$post->date_debut->format('d-m-Y')}}</small><br/>
+      <small class="text-muted">Date de fin : {{$post->date_fin->format('d-m-Y')}}</small>
     </div>
   </div>
 </div>

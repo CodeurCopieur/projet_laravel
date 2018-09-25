@@ -13,7 +13,7 @@ class Post extends Model
     ];
 
     protected $fillable = [
-        'title', 'post_type', 'description', 'date_debut', 'date_fin', 'prix', 'max_eleves', 'publication'
+        'title', 'post_type', 'description', 'date_debut', 'date_fin', 'prix', 'max_eleves', 'publication', 'category_id'
     ];
 
     public function category() {

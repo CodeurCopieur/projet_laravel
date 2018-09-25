@@ -20,7 +20,8 @@
       <p class="card-text">{{$post->description}}</p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">{{$post->date_debut}}</small>
+      <small class="text-muted">Date de début : {{$post->date_debut->format('d-m-Y')}}</small><br/>
+      <small class="text-muted">Date de fin : {{$post->date_fin->format('d-m-Y')}}</small>
     </div>
   </div>
 </div>

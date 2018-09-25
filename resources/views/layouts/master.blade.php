@@ -27,5 +27,8 @@
     </div>
 </div>
 <script src="{{asset('js/app.js')}}"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
+
+@include('flashy::message')
 </body>
 </html>

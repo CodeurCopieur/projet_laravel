@@ -18,7 +18,6 @@
   </ul>
   <div class="card-body">
   <p class="card-text">Nombre d'élève : {{$post->max_eleves}}</p>
-    <a href="#" class="card-link">1 post</a>
   </div>
 </div>
 

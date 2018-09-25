@@ -44,25 +44,37 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'post_type' => 'required',
             'description' => 'required|string',
+            'post_type' => 'required',
+            'category_id' => 'required',
             'date_debut' => 'date',
             'date_fin' => 'date',
             'prix' => 'integer',
             'max_eleves' => 'integer',
-            'publication' => 'in:publier,unpublished',
-            'picture' => 'image|max:5000',
+            'publication' => 'in:publier,nonpublier',
+            //'picture' => 'required|image|max:3000'
         ]);
-
+        
         $post = Post::create($request->all());
+        
+        /* echo '<pre>';
+        var_dump($post);
+        echo '</pre>';
+        die(); */
 
-       /* $link = $request->file('picture')->store('./');
+       /* $pic = $request->file('picture');    
 
-        $post->picture()->create([
-            'link' => $link,
-            'title' => 'No title'
-        ]);*/
+        if(!empty($pic)){
+            $link = $request->file('picture')->store('images');
+            //if( $post->picture()->exits())
 
+            $post->picture()->create([
+                'link' => $link,
+                'title' => $request->title_image?? $request->title
+            ]);
+        }*/
+
+        //$post->categories()->attach($request->categories);
         return redirect()->route('post.index')->with('message', 'success');
     }
 
@@ -109,6 +121,20 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required|string',
+            'post_type' => 'required',
+            'category_id' => 'required',
+            'date_debut' => 'date',
+            'date_fin' => 'date',
+            'prix' => 'integer',
+            'max_eleves' => 'integer',
+            'publication' => 'in:publier,nonpublier'
+        ]);
+
+
         //On recup le livre souhaité
         $post = Post::find($id);
         //On met a jour les données de ce livre
@@ -122,24 +148,39 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         // $post->categories()->sync($request->category_id);
 
-        $im = $request->file('picture');
+        $pic = $request->file('picture');
 
-        if(!empty($im)) {
+        if($pic != null ) {
+            $link = $request->picture->store('');
 
-           /* if(is_null($post->picture) == false) {
+            //$link = $request->file('picture')->store('images');
+            //$link = $picture->store('./');
+            //if(count($post->picture)>0) {
+
+           if($post->picture()->exits()):
                 Storage::disk('local')->delete($post->picture->link); //on supprime physiquement l'image
-                $post->picture()->delete(); //Supprime l'information en base
-            }*/
-
-            $link = $request->file('picture')->store('images');
-
-            $post->picture()->create([
-                'link' => $link,
-                'title' => 'No title'
+                //$post->picture()->delete(); //Supprime l'information en base
+            //mettre à jour la table picture 
+            $post->picture()->update([
+                'link'=> $link,
             ]);
+            else:
+                $post->picture()->create([
+                    'link'=> $link,
+                ]);
+            endif;
 
         }
 
+         /* $link = $im->store('');
+            $post->picture()->create([
+                'link' => $link,
+                'title' => $request->title_image?? $request->title
+            ]);*/
+
+
+        $post->update($request->except('picture')); //mettre à jour les données d'un post
+        $post->categories()->sync($request->categories); //synchronise les données avec la table de liaison
         // Sauvegarde
         $post->save();
 

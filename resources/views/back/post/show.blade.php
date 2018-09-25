@@ -5,6 +5,7 @@
     <div class="col-md-6">
         <h4>Titre : {{$post->title}}</h4>
         <p>Description : {{$post->description}}</p>
+        <p>Type de post : {{$post->post_type}}</p>
 	    <p>Catégorie : {{$post->category->name?? 'aucun'}}</p>
         <p>Date de création : {{$post->date_debut->format('d-m-Y')}}</p>
         <p>Date de mise à jour : {{$post->date_fin->format('d-m-Y')}}</p>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\ContactMessageCreated;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,8 +29,6 @@ Route::get('/', function () {
 Route::get('/', 'FrontController@index')->name('home');
 // Route pour afficher un livre, route sécurisé
 Route::get('post/{id}', 'FrontController@show')->name('post')->where(['id'=>'[0-9]+']);
-
-
 //Route pour afficher les auteurs
 Route::get('stage', 'FrontController@showPostStage')->name('stage');
 //Route pour afficher les genres 
@@ -46,3 +45,7 @@ Route::resource('admin/post', 'PostController')->middleware('auth');
 Route::get('/search', 'FrontController@searchPost')->name('search');
 
 Route::get('/contact', 'FrontController@formContact')->name('contact');
+
+Route::post('/contact', 'FrontController@store')->name('contact');
+
+Route::get('/test-mail', function() { return new ContactMessageCreated('Inconnu dev', 'ID@gmail.com', 'Merci'); });

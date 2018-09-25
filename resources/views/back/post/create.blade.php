@@ -11,25 +11,28 @@
                     <div class="form-group">
 				        <label for="title">Titre :</label>
 						<input class="form-control" type="text" name="title" value="{{old('title')}}" placeholder="Title" />
+						@if($errors->has('title')) 
+							<span class="error">{{$errors->first('title')}}</span>
+						@endif
 					</div>
-				@if($errors->has('title')) 
-					<span class="error">{{$errors->first('title')}}</span>
-				@endif
+
+					
+					<div class="form-group">
+						<label>Description</label>
+						<textarea class="form-control" rows="3" name="description" placeholder="Description">{{old('description')}}</textarea>
+						@if($errors->has('description')) 
+							<span class="error">{{$errors->first('description')}}</span>
+						@endif
+                	</div>
+				
                 
 				<label class="my-1 mr-2" for="post_type">Type de poste</label>
-				<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+				<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="post_type">
 				<option selected>Sélectionner un type de poste</option>
 				<option value="1">Stage</option>
 				<option value="2">Formation</option>
 				</select>
 
-                <div class="form-group">
-					<label>Description</label>
-					<textarea class="form-control" rows="3" name="description" placeholder="Description">{{old('description')}}</textarea>
-					@if($errors->has('description')) 
-						<span class="error">{{$errors->first('description')}}</span>
-					@endif
-                </div>
 
 				<div class="form-group">
 					<label>Date de début</label>
@@ -68,14 +71,20 @@
 				</div>
 
 				<div class="form-group">
+		                <h2>File :</h2>
+		                <input class="file" type="file" name="picture" >
+		               {{--  @if($errors->has('picture')) <span class="error bg-warning text-warning">{{$errors->first('picture')}}</span> @endif --}}
+		            </div>
+
+				<div class="form-group">
 					<div class="col-md-6">
 						<div class="input-radio">
 							<h2>Status</h2>
-							<input class="form-check-input" type="radio" @if(old('status')=='published') checked @endif name="status" value="published" checked> publier<br>
-							<input class="form-check-input" type="radio" @if(old('status')=='unpublished') checked @endif name="status" value="unpublished" > dépublier<br>
+							<input class="form-check-input" type="radio" @if(old('status')=='publier') checked @endif name="publication" value="publier" checked> publier<br>
+							<input class="form-check-input" type="radio" @if(old('status')=='nonpublier') checked @endif name="publication" value="nonpublier" > dépublier<br>
 						</div>
 					</div>
-				</div>         	
+				</div>       	
             </div>
 			<button class="btn btn-primary" type="submit">Ajouter le livre</button>
 			</form>
